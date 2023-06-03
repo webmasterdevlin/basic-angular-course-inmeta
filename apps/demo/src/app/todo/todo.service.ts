@@ -3,14 +3,13 @@ import { Injectable } from '@angular/core';
 import { Todo } from '@superheroes/api-interfaces';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class TodoService {
-
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {}
 
   getTodos(query = '') {
-    return this.http.get<Todo[]>(`/api/todo?query=${query}`)
+    return this.http.get<Todo[]>(`/api/todo?query=${query}`);
   }
   add(data: Todo) {
     return this.http.post<Todo>('/api/todo', data);
@@ -28,5 +27,4 @@ export class TodoService {
     selected.isDone = !selected.isDone;
     return this.http.patch<Todo>(`/api/todo/${selected.id}`, selected);
   }
-
 }
