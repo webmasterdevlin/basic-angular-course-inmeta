@@ -3,7 +3,7 @@ import { Todo } from '@superheroes/api-interfaces';
 import { TodoService } from './todo.service';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 
-UntilDestroy()
+UntilDestroy();
 @Component({
   selector: 'superheroes-todo',
   templateUrl: './todo.component.html',
@@ -27,14 +27,15 @@ export class TodoComponent implements OnInit {
       .subscribe((todos) => {
         this.todos = todos;
         this.activeTasks = this.todos.filter((todo) => !todo.isDone).length;
-      })
+      });
   }
   addTodo() {
     const newTodo = {
-      title: this.newTodo
+      title: this.newTodo,
     } as Todo;
 
-    return this.todoService.add(newTodo)
+    return this.todoService
+      .add(newTodo)
       .pipe(untilDestroyed(this))
       .subscribe((data) => {
         this.newTodo = '';
@@ -44,36 +45,39 @@ export class TodoComponent implements OnInit {
   updateTodo(todo: Todo, newValue: string) {
     todo.title = newValue;
 
-    return this.todoService.put(todo)
+    return this.todoService
+      .put(todo)
       .pipe(untilDestroyed(this))
       .subscribe(() => (todo.editing = false));
   }
   destroyTodo(todo: Todo, index: number) {
-    return this.todoService.deleteById(todo)
+    return this.todoService
+      .deleteById(todo)
       .pipe(untilDestroyed(this))
       .subscribe(() => this.todos.splice(index, 1));
   }
   clearCompleted() {
-    this.todoService.deleteCompleted()
+    this.todoService
+      .deleteCompleted()
       .pipe(untilDestroyed(this))
       .subscribe(() => {
         this.todos = this.todos.filter((todo) => !todo.isDone);
-      }
-    );
+      });
   }
   toggleTodo(todo: Todo) {
-    return this.todoService.toggle(todo)
+    return this.todoService
+      .toggle(todo)
       .pipe(untilDestroyed(this))
       .subscribe(() => {
-        this.activeTasks = this.todos.filter(
-          (todo) => !todo.isDone).length;
+        this.activeTasks = this.todos.filter((todo) => !todo.isDone).length;
       });
   }
   allTodos() {
     this.getTodos();
   }
   activeTodos() {
-    return this.todoService.getTodos('')
+    return this.todoService
+      .getTodos('')
       .pipe(untilDestroyed(this))
       .subscribe((todos) => {
         const actives = todos.filter((todo) => !todo.isDone);
@@ -82,7 +86,8 @@ export class TodoComponent implements OnInit {
       });
   }
   completedTodos() {
-    return this.todoService.getTodos('')
+    return this.todoService
+      .getTodos('')
       .pipe(untilDestroyed(this))
       .subscribe((todos) => {
         const completed = todos.filter((todo) => todo.isDone);
