@@ -8,6 +8,33 @@
     placeholder="What needs to be done?"
     />
   </header>
+
+  <section class="main">
+    <ul class="todo-list">
+      <li *ngFor="let todo of todos; let i = index"
+      [ngClass]="{completed: todo.isDone, editing: todo.editing }"
+      >
+      <div class="view">
+        <input (click)="toggleTodo(todo)"
+        [checked]="todo.isDone"
+        type="checkbox"
+        class="toggle"
+        />
+        <label (dblclick)="todo.editing = true">{{todo.title}}</label>
+        <button (click)="destroyTodo(todo, i)" class="destroy" ></button>
+      </div>
+      <input
+      #updateTodo
+      (blur)="updateTodo(todo, updateTodo.value)"
+      (keyup.enter)="updateTodo(todo, updateTodo.value)"
+      (keyup.escape)="todo.editing = false"
+      [value]="todo.title"
+      class="edit"
+      />
+    </li>
+    </ul>
+  </section>
+
   <!-- this footer should be hidden by default and shown when
   there are todos -->
   <footer class="footer">
