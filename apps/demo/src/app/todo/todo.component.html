@@ -1,1 +1,35 @@
-<p>todo works!</p>
+<section class="todoapp">
+  <header class="header">
+    <h1>todos</h1>
+    <input (keyup.enter)="addTodo()"
+    [(ngModel)]="newTodo"
+    autofocus
+    class="new-todo"
+    placeholder="What needs to be done?"
+    />
+  </header>
+  <!-- this footer should be hidden by default and shown when
+  there are todos -->
+  <footer class="footer">
+    <!-- this should be '0 items left by' default  -->
+    <span class="todo-count">
+      <strong>{{activeTasks}}</strong> item left
+    </span>
+    <!-- Remove this if you don't implement routing -->
+    <ul class="filters">
+      <li>
+        <a (click)="allTodos()">All</a>
+      </li>
+      <li>
+        <a (click)="activeTodos()">Active</a>
+      </li>
+      <li>
+        <a (click)="completedTodos()">Completed</a>
+      </li>
+    </ul>
+    <!-- Hidden if no completed items are left ↓ -->
+    <button (click)="clearCompleted()" class="clear-completed">
+      Clear completed
+    </button>
+  </footer>
+</section>
