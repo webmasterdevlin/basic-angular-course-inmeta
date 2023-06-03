@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { Todo } from '@superheroes/api-interfaces';
 import { TodoService } from './todo.service';
+import type { Todo } from '@superheroes/api-interfaces';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 
 UntilDestroy();
@@ -16,8 +16,8 @@ export class TodoComponent implements OnInit {
 
   constructor(private todoService: TodoService) {}
 
-  ngOnInit() {
-    this.getTodos();
+  ngOnInit(): void {
+    this.getTodos('');
   }
 
   getTodos(query = '') {
@@ -33,29 +33,28 @@ export class TodoComponent implements OnInit {
     const newTodo = {
       title: this.newTodo,
     } as Todo;
-
     return this.todoService
       .add(newTodo)
       .pipe(untilDestroyed(this))
       .subscribe((data) => {
-        this.newTodo = '';
+        this.newTodo = ''; // clear input form value
         this.todos.push(data);
       });
   }
   updateTodo(todo: Todo, newValue: string) {
     todo.title = newValue;
-
     return this.todoService
       .put(todo)
       .pipe(untilDestroyed(this))
       .subscribe(() => (todo.editing = false));
   }
   destroyTodo(todo: Todo, index: number) {
-    return this.todoService
+    this.todoService
       .deleteById(todo)
       .pipe(untilDestroyed(this))
       .subscribe(() => this.todos.splice(index, 1));
   }
+
   clearCompleted() {
     this.todoService
       .deleteCompleted()
@@ -65,7 +64,7 @@ export class TodoComponent implements OnInit {
       });
   }
   toggleTodo(todo: Todo) {
-    return this.todoService
+    this.todoService
       .toggle(todo)
       .pipe(untilDestroyed(this))
       .subscribe(() => {
@@ -73,7 +72,7 @@ export class TodoComponent implements OnInit {
       });
   }
   allTodos() {
-    this.getTodos();
+    this.getTodos('');
   }
   activeTodos() {
     return this.todoService
