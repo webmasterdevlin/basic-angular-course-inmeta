@@ -72,4 +72,22 @@ export class TodoComponent implements OnInit {
   allTodos() {
     this.getTodos();
   }
+  activeTodos() {
+    return this.todoService.getTodos('')
+      .pipe(untilDestroyed(this))
+      .subscribe((todos) => {
+        const actives = todos.filter((todo) => !todo.isDone);
+        this.activeTasks = actives.length;
+        this.todos = actives;
+      });
+  }
+  completedTodos() {
+    return this.todoService.getTodos('')
+      .pipe(untilDestroyed(this))
+      .subscribe((todos) => {
+        const completed = todos.filter((todo) => todo.isDone);
+        this.activeTasks = completed.length;
+        this.todos = completed;
+      });
+  }
 }
