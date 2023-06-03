@@ -1,0 +1,17 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = "file:./db.sql"
+}
+
+model Todo {
+  id        String   @id @default(uuid())
+  title     String
+  isDone    Boolean  @default(false)
+  editing   Boolean  @default(false)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}

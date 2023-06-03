@@ -1,0 +1,128 @@
+{
+  "name": "demo",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "projectType": "application",
+  "sourceRoot": "apps/demo/src",
+  "prefix": "superheroes",
+  "targets": {
+    "build": {
+      "executor": "@angular-devkit/build-angular:browser",
+      "options": {
+        "outputPath": "dist/apps/demo",
+        "index": "apps/demo/src/index.html",
+        "main": "apps/demo/src/main.ts",
+        "polyfills": "apps/demo/src/polyfills.ts",
+        "tsConfig": "apps/demo/tsconfig.app.json",
+        "aot": true,
+        "assets": ["apps/demo/src/favicon.ico", "apps/demo/src/assets"],
+        "styles": ["apps/demo/src/styles.css"],
+        "scripts": []
+      },
+      "configurations": {
+        "production": {
+          "fileReplacements": [
+            {
+              "replace": "apps/demo/src/environments/environment.ts",
+              "with": "apps/demo/src/environments/environment.prod.ts"
+            }
+          ],
+          "optimization": true,
+          "outputHashing": "all",
+          "sourceMap": false,
+          "namedChunks": false,
+          "extractLicenses": true,
+          "vendorChunk": false,
+          "buildOptimizer": true,
+          "budgets": [
+            {
+              "type": "initial",
+              "maximumWarning": "2mb",
+              "maximumError": "5mb"
+            },
+            {
+              "type": "anyComponentStyle",
+              "maximumWarning": "6kb",
+              "maximumError": "10kb"
+            }
+          ]
+        }
+      }
+    },
+    "serve": {
+      "executor": "@angular-devkit/build-angular:dev-server",
+      "options": {
+        "browserTarget": "demo:build",
+        "proxyConfig": "apps/demo/proxy.conf.json"
+      },
+      "configurations": {
+        "production": {
+          "browserTarget": "demo:build:production"
+        }
+      }
+    },
+    "extract-i18n": {
+      "executor": "@angular-devkit/build-angular:extract-i18n",
+      "options": {
+        "browserTarget": "demo:build"
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "options": {
+        "lintFilePatterns": ["apps/demo/src/**/*.ts", "apps/demo/src/**/*.html"]
+      },
+      "outputs": ["{options.outputFile}"]
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["{workspaceRoot}/coverage/apps/demo"],
+      "options": {
+        "jestConfig": "apps/demo/jest.config.ts",
+        "passWithNoTests": true
+      }
+    },
+    "prisma-generate": {
+      "executor": "@nx-tools/nx-prisma:generate",
+      "options": {
+        "schema": "prisma/schema.prisma"
+      }
+    },
+    "prisma-migrate": {
+      "executor": "@nx-tools/nx-prisma:migrate",
+      "options": {
+        "schema": "prisma/schema.prisma"
+      }
+    },
+    "prisma-pull": {
+      "executor": "@nx-tools/nx-prisma:pull",
+      "options": {
+        "schema": "prisma/schema.prisma"
+      }
+    },
+    "prisma-push": {
+      "executor": "@nx-tools/nx-prisma:push",
+      "options": {
+        "schema": "prisma/schema.prisma"
+      }
+    },
+    "prisma-deploy": {
+      "executor": "@nx-tools/nx-prisma:deploy",
+      "options": {
+        "schema": "prisma/schema.prisma"
+      }
+    },
+    "prisma-status": {
+      "executor": "@nx-tools/nx-prisma:status",
+      "options": {
+        "schema": "prisma/schema.prisma"
+      }
+    },
+    "prisma-studio": {
+      "executor": "@nx-tools/nx-prisma:studio",
+      "options": {
+        "schema": "prisma/schema.prisma"
+      }
+    }
+  },
+  "tags": []
+}
