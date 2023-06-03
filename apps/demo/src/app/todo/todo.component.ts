@@ -29,4 +29,29 @@ export class TodoComponent implements OnInit {
         this.activeTasks = this.todos.filter((todo) => !todo.isDone).length;
       })
   }
+  addTodo() {
+    const newTodo = {
+      title: this.newTodo
+    } as Todo;
+
+    return this.todoService.add(newTodo)
+      .pipe(untilDestroyed(this))
+      .subscribe((data) => {
+        this.newTodo = '';
+        this.todos.push(data);
+      });
+  }
+  updateTodo(todo: Todo, newValue: string) {
+    todo.title = newValue;
+
+    return this.todoService.put(todo)
+      .pipe(untilDestroyed(this))
+      .subscribe(() => (todo.editing = false));
+  }
+  destroyTodo(todo: Todo, index: number) {
+    return this.todoService.deleteById(todo)
+      .pipe(untilDestroyed(this))
+      .subscribe(() => this.todos.splice(index, 1));
+  }
+
 }
