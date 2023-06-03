@@ -20,16 +20,16 @@
           <input
             (click)="toggleTodo(todo)"
             [checked]="todo.isDone"
-            type="checkbox"
             class="toggle"
+            type="checkbox"
           />
           <label (dblclick)="todo.editing = true">{{ todo.title }}</label>
           <button (click)="destroyTodo(todo, i)" class="destroy"></button>
         </div>
         <input
-          #updateTodo
-          (blur)="updateTodo(todo, updateTodo.value)"
-          (keyup.enter)="updateTodo(todo, updateTodo.value)"
+          #updatedTodo
+          (blur)="updateTodo(todo, updatedTodo.value)"
+          (keyup.enter)="updateTodo(todo, updatedTodo.value)"
           (keyup.escape)="todo.editing = false"
           [value]="todo.title"
           class="edit"
@@ -38,13 +38,12 @@
     </ul>
   </section>
 
-  <!-- this footer should be hidden by default and shown when
-  there are todos -->
+  <!-- This footer should hidden by default and shown when there are todos -->
   <footer class="footer">
-    <!-- this should be '0 items left by' default  -->
-    <span class="todo-count">
-      <strong>{{ activeTasks }}</strong> item left
-    </span>
+    <!-- This should be `0 items left` by default -->
+    <span class="todo-count"
+      ><strong>{{ activeTasks }}</strong> item left</span
+    >
     <!-- Remove this if you don't implement routing -->
     <ul class="filters">
       <li>
