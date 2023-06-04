@@ -52,7 +52,10 @@ export class TodoComponent implements OnInit {
     this.todoService
       .deleteById(todo)
       .pipe(untilDestroyed(this))
-      .subscribe(() => this.todos.splice(index, 1));
+      .subscribe(() => {
+        this.todos.splice(index, 1);
+        this.activeTasks = this.todos.filter((todo) => !todo.isDone).length;
+      });
   }
 
   clearCompleted() {
