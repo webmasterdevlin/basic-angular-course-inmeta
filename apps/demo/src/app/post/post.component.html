@@ -1,5 +1,7 @@
 <p>Headlines</p>
-<button>get latest posts</button>
+<button (click)="getNewPosts()">get latest posts</button>
 <ul>
-  <li></li>
+  <li *ngFor="let post of posts$ | async">
+    {{ post.title }}
+  </li>
 </ul>
