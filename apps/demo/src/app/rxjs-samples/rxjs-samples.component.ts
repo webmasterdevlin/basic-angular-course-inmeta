@@ -62,4 +62,44 @@ export class RxjsSamplesComponent implements OnInit {
         console.table(results);
       });
   }
+
+  tapOperator() {
+    this.sampleService
+      .getAlbums()
+      .pipe(
+        catchError((err) => EMPTY),
+        // tap ignores the return value of the function
+        tap((albums) => {
+          console.log('log');
+          return albums.map((album) => {
+            return {
+              x: album.id,
+              xx: album.title,
+              xxx: album.userId,
+            };
+          });
+        }),
+        untilDestroyed(this)
+      )
+      .subscribe((results) => {
+        console.log(results);
+        console.table(results);
+      });
+  }
+
+  switchMapOperator() {
+    this.sampleService
+      .getUserById(1)
+      .pipe(
+        catchError((err) => EMPTY),
+        switchMap((user) => {
+          return this.sampleService.getPostsByUserId(user.id);
+        }),
+        untilDestroyed(this)
+      )
+      .subscribe((results) => {
+        console.log(results);
+        console.table(results);
+      });
+  }
 }
