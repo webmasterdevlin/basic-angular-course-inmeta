@@ -122,6 +122,7 @@ export class RxjsSamplesComponent implements OnInit {
       .pipe(
         map((v) => v.querySearchTerm),
         debounceTime(2000),
+        distinctUntilChanged(),
         untilDestroyed(this)
       )
       .subscribe((v) => {
