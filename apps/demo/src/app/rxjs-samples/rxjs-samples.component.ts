@@ -102,4 +102,18 @@ export class RxjsSamplesComponent implements OnInit {
         console.table(results);
       });
   }
+
+  combineLatestOperator() {
+    combineLatest([
+      this.sampleService.getPhotos(),
+      this.sampleService.getAlbums(),
+    ])
+      .pipe(
+        catchError((err) => EMPTY),
+        untilDestroyed(this)
+      )
+      .subscribe(([photos, albums]) => {
+        console.log('results:', { photos, albums });
+      });
+  }
 }
