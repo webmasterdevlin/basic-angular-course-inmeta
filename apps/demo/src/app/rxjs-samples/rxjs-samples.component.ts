@@ -29,10 +29,6 @@ export class RxjsSamplesComponent implements OnInit {
     private sampleService: RxjsSamplesService
   ) {}
 
-  ngOnInit(): void {
-    console.log('');
-  }
-
   mapOperator() {
     this.sampleService
       .getPosts()
@@ -114,6 +110,22 @@ export class RxjsSamplesComponent implements OnInit {
       )
       .subscribe(([photos, albums]) => {
         console.log('results:', { photos, albums });
+      });
+  }
+
+  ngOnInit(): void {
+    this.initForm();
+  }
+
+  initForm() {
+    this.myForm.valueChanges
+      .pipe(
+        map((v) => v.querySearchTerm),
+        debounceTime(2000),
+        untilDestroyed(this)
+      )
+      .subscribe((v) => {
+        console.log(v);
       });
   }
 }

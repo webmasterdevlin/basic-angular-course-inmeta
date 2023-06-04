@@ -17,5 +17,15 @@
   </div>
   <div>
     <h2>DEBOUNCETIME and DISTINCUNTILCHANGED</h2>
+    <form [formGroup]="myForm">
+      <div>
+        <label for="querySearchTerm">Search :</label>
+        <input
+          formControlName="querySearchTerm"
+          id="querySearchTerm"
+          type="text"
+        />
+      </div>
+    </form>
   </div>
 </div>
