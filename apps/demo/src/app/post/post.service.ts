@@ -19,11 +19,11 @@ export class PostService {
       .subscribe((posts) => this.posts$.next(posts));
   }
 
-  public getPosts(): Observable<Post[]> {
+  getPosts(): Observable<Post[]> {
     return this.posts$;
   }
 
-  public getNewPosts(): Observable<Post[]> {
+  getNewPosts(): Observable<Post[]> {
     return this.posts$.pipe(
       map((posts) => posts.filter((post) => post.id > 20))
     );
