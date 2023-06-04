@@ -12,6 +12,10 @@ const routes: Routes = [
     loadChildren: () => import('./todo/todo.module').then((m) => m.TodoModule),
   },
   {
+    path: 'post',
+    loadChildren: () => import('./post/post.module').then((m) => m.PostModule),
+  },
+  {
     path: 'rxjs-samples',
     loadChildren: () =>
       import('./rxjs-samples/rxjs-samples.module').then(

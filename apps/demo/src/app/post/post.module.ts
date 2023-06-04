@@ -1,9 +1,16 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { PostComponent } from './apps/demo/src/app/post/post.component';
+import { PostComponent } from './post.component';
+import { RouterModule, Routes } from '@angular/router';
+import { SharedModule } from '../shared/shared.module';
 
+const routes: Routes = [
+  {
+    path: '',
+    component: PostComponent,
+  },
+];
 @NgModule({
   declarations: [PostComponent],
-  imports: [CommonModule],
+  imports: [SharedModule, RouterModule.forChild(routes)],
 })
 export class PostModule {}
